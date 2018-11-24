@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SaintJudeHospital.Data.Entity
 {
-    public class PatientStatus
+    public class Laboratory
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { set; get; }

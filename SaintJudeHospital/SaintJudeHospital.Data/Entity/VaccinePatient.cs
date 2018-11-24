@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace SaintJudeHospital.Data.Entity
 {
     public class VaccinePatient
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { set; get; }
         public int VaccineId { set; get; }
         public Vaccine Vaccine { set; get; }

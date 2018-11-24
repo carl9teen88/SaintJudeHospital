@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SaintJudeHospital.Data.Entity;
 
 namespace SaintJudeHospital.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181124031634_initial")]
+    partial class initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -144,30 +146,6 @@ namespace SaintJudeHospital.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Immunizes");
-
-                    b.HasData(
-                        new { Id = 1, Amount = 3000m, Name = "HEXA" },
-                        new { Id = 2, Amount = 3200m, Name = "PCV 10" },
-                        new { Id = 3, Amount = 750m, Name = "MEASLES" },
-                        new { Id = 4, Amount = 1300m, Name = "HIB" },
-                        new { Id = 5, Amount = 4000m, Name = "MENINGO" },
-                        new { Id = 6, Amount = 1300m, Name = "TYPHOID" },
-                        new { Id = 7, Amount = 1800m, Name = "HEP A" },
-                        new { Id = 8, Amount = 700m, Name = "HEP B" },
-                        new { Id = 9, Amount = 1600m, Name = "TETRAXIM" },
-                        new { Id = 10, Amount = 1200m, Name = "MMR" },
-                        new { Id = 11, Amount = 2200m, Name = "CHICKEN POX" },
-                        new { Id = 12, Amount = 2500m, Name = "PENTA" },
-                        new { Id = 13, Amount = 900m, Name = "BCG-1" },
-                        new { Id = 14, Amount = 3000m, Name = "MMR-V" },
-                        new { Id = 15, Amount = 1700m, Name = "PNEUMO-23" },
-                        new { Id = 16, Amount = 1700m, Name = "RABIES" },
-                        new { Id = 17, Amount = 3000m, Name = "ROTARIX" },
-                        new { Id = 18, Amount = 2200m, Name = "ROTATEQ" },
-                        new { Id = 19, Amount = 1000m, Name = "FLU" },
-                        new { Id = 20, Amount = 4000m, Name = "PCV" },
-                        new { Id = 21, Amount = 0m, Name = "BCG-2" }
-                    );
                 });
 
             modelBuilder.Entity("SaintJudeHospital.Data.Entity.InPatient", b =>
@@ -334,11 +312,6 @@ namespace SaintJudeHospital.Migrations
                     b.HasKey("RoleId");
 
                     b.ToTable("Roles");
-
-                    b.HasData(
-                        new { RoleId = 1, Name = "Administrator" },
-                        new { RoleId = 2, Name = "StandardUser" }
-                    );
                 });
 
             modelBuilder.Entity("SaintJudeHospital.Data.Entity.Symtom", b =>
@@ -377,10 +350,6 @@ namespace SaintJudeHospital.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("Users");
-
-                    b.HasData(
-                        new { UserId = 1, FirstName = "Carl", LastName = "Tanilon", Password = "1234", RoleId = 1, Username = "carl" }
-                    );
                 });
 
             modelBuilder.Entity("SaintJudeHospital.Data.Entity.Vaccine", b =>

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SaintJudeHospital.Data.Seed;
 
 namespace SaintJudeHospital.Data.Entity
 {
@@ -15,9 +16,10 @@ namespace SaintJudeHospital.Data.Entity
 
         public DbSet<Symtom> Symtoms { set; get; }
 
-        public DbSet<Patient> Patients { set; get; }
-
         public DbSet<Parent> Parents { set; get; }
+
+        public DbSet<Patient> Patients { set; get; }
+       
 
         public DbSet<Medicine> Medicines { set; get; }
         
@@ -34,5 +36,20 @@ namespace SaintJudeHospital.Data.Entity
         public DbSet<MedicalCertificate> MedicalCertificates { set; get; }
 
         public DbSet<PatientStatus> PatientStatuses { set; get; }
+
+        public DbSet<Laboratory> Laboratories { set; get; }
+
+        public DbSet<InPatient> InPatients { set; get; }
+
+        public DbSet<Immunize> Immunizes { set; get; }
+
+        public DbSet<Bill> Bills { set; get; }
+
+        public DbSet<BillStatus> BillStatuses { set; get; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            AppDbContextInitializer.Load(builder);
+        }
     }
 }
