@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SaintJudeHospital.Mediators
 {
-    public interface IMediatRHandler
+    public interface IMediatorHandler
     {
     }
 }

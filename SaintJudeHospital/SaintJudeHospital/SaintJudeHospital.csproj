@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SaintJudeHospital.Data\SaintJudeHospital.Data.csproj" />
+    <ProjectReference Include="..\SaintJudeHospital.Mediators\SaintJudeHospital.Mediators.csproj" />
   </ItemGroup>
 
 </Project>

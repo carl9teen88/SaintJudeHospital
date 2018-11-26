@@ -1,17 +1,16 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SaintJudeHospital.Data.Entity;
+using SaintJudeHospital.Mediators;
+using SaintJudeHospital.Services.Impl;
+using SaintJudeHospital.Services.Interfaces;
 
 namespace SaintJudeHospital
 {
@@ -27,6 +26,8 @@ namespace SaintJudeHospital
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            BuildMediator(services);
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -37,6 +38,8 @@ namespace SaintJudeHospital
             services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("SaintJudeHospital")));
+
+            services.AddTransient<IImmunizationService, ImmunizationService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
@@ -72,7 +75,7 @@ namespace SaintJudeHospital
 
             services.Scan(scan => scan
                 .FromAssembliesOf(typeof(IMediator),
-                    typeof(IMediatRHandler))
+                    typeof(IMediatorHandler))
                 .AddClasses()
                 .AsImplementedInterfaces());
 

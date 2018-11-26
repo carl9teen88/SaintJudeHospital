@@ -18,8 +18,7 @@ namespace SaintJudeHospital
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseIISIntegration()
+            WebHost.CreateDefaultBuilder(args)                
                 .UseStartup<Startup>();
     }
 }

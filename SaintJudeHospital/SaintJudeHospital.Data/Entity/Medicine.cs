@@ -12,7 +12,7 @@ namespace SaintJudeHospital.Data.Entity
         public string GenericName { set; get; }
         public string Inscription { set; get; }
         public string Description { set; get; }
-        public int BrandId { set; get; }
+        public int? BrandId { set; get; }
         public Brand Brand { set; get; }
     }
 }
