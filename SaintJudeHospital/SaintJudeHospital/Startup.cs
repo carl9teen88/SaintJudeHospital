@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -57,7 +58,27 @@ namespace SaintJudeHospital
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
-            app.UseMvc();
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
+            });
+        }
+
+        private static IMediator BuildMediator(IServiceCollection services)
+        {
+            services.AddScoped<ServiceFactory>(p => p.GetService);
+
+            services.Scan(scan => scan
+                .FromAssembliesOf(typeof(IMediator),
+                    typeof(IMediatRHandler))
+                .AddClasses()
+                .AsImplementedInterfaces());
+
+            var provider = services.BuildServiceProvider();
+
+            return provider.GetRequiredService<IMediator>();
         }
     }
 }
