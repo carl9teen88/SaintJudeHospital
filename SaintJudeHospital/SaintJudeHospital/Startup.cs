@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SaintJudeHospital.Data.Entity;
 using SaintJudeHospital.Mediators;
+using SaintJudeHospital.Services;
 using SaintJudeHospital.Services.Impl;
 using SaintJudeHospital.Services.Interfaces;
 
@@ -39,7 +40,7 @@ namespace SaintJudeHospital
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("SaintJudeHospital")));
 
-            services.AddTransient<IImmunizationService, ImmunizationService>();
+            BuildDataServices(services);
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
@@ -83,5 +84,18 @@ namespace SaintJudeHospital
 
             return provider.GetRequiredService<IMediator>();
         }
+
+        private static void BuildDataServices(IServiceCollection services)
+        {
+            services.Scan(scan => scan
+                            .FromAssembliesOf(typeof(IService))
+                            .AddClasses()
+                            .AsImplementedInterfaces());
+
+            var provider = services.BuildServiceProvider();
+
+            provider.GetRequiredService<IService>();
+        }
+
     }
 }

@@ -6,9 +6,10 @@ using System.Text;
 
 namespace SaintJudeHospital.Services.Interfaces
 {
-    public interface IImmunizationService : IService
+    public interface IGenericService : IService
     {
-        IQueryable<Immunize> GetAll(int page, int rrp);
-        Immunize GetById(int id);
+        IQueryable<Generic> GetAll();
+        Generic Get(int id);
+        Generic GetByName(string name);
     }
 }

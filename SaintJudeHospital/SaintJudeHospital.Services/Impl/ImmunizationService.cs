@@ -13,17 +13,18 @@ namespace SaintJudeHospital.Services.Impl
             _context = context;
         }
 
-        public IQueryable<Immunize> GetImmunizes(int page, int rrp)
+        public IQueryable<Immunize> GetAll(int page, int rpp)
         {
-            var skip = page > 1 ? (page - 1 * rrp) : 0;
+            var skip = page > 1 ? (page - 1 * rpp) : 0;
+            var take = page * rpp;
 
             return _context.Immunizes
                 .Skip(skip)
-                .Take(page)
+                .Take(take)
                 .OrderBy(i => i.Name);
         }
 
-        public Immunize GetImmunizeById(int id)
+        public Immunize GetById(int id)
         {
             return _context.Immunizes.Find(id);
         }

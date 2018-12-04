@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\SaintJudeHospital.Common\SaintJudeHospital.Common.csproj" />
     <ProjectReference Include="..\SaintJudeHospital.Services\SaintJudeHospital.Services.csproj" />
   </ItemGroup>
 

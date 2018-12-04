@@ -24,15 +24,15 @@ namespace SaintJudeHospital.Mediators.Queries.Immunize
 
         protected override IList<ImmunizeQueryResult> Handle(ImmunizeQueryAll request)
         {
-            var immunizes = _immunizationService.GetImmunizes(request.Page, request.Rpp);
-
-            return immunizes.Select(i => new ImmunizeQueryResult
-            {
-                Id = i.Id,
-                Name = i.Name,
-                Amount = i.Amount
-            })
-            .ToList();
+            return _immunizationService.
+                GetAll(request.Page, request.Rpp)
+                .Select(i => new ImmunizeQueryResult
+                {
+                    Id = i.Id,
+                    Name = i.Name,
+                    Amount = i.Amount
+                })
+                .ToList();
         }
     }
 }

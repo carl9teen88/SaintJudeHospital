@@ -20,6 +20,9 @@ namespace SaintJudeHospital.Data.Entity
 
         public DbSet<Patient> Patients { set; get; }
        
+        public DbSet<Inscription> Inscriptions { set; get; }
+
+        public DbSet<Generic> Generics { set; get; }
 
         public DbSet<Medicine> Medicines { set; get; }
         

@@ -22,7 +22,7 @@ namespace SaintJudeHospital.Mediators.Queries.Immunize
 
         protected override ImmunizeQueryResult Handle(ImmunizeQueryById request)
         {
-            var immnunize = _immunizationService.GetImmunizeById(request.Id);
+            var immnunize = _immunizationService.GetById(request.Id);
 
             return new ImmunizeQueryResult
             {
