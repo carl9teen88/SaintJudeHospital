@@ -9,6 +9,50 @@ namespace SaintJudeHospital.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "AspNetRoles",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(maxLength: 256, nullable: true),
+                    NormalizedName = table.Column<string>(maxLength: 256, nullable: true),
+                    ConcurrencyStamp = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetRoles", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUsers",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    UserName = table.Column<string>(maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
+                    Email = table.Column<string>(maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(nullable: false),
+                    PasswordHash = table.Column<string>(nullable: true),
+                    SecurityStamp = table.Column<string>(nullable: true),
+                    ConcurrencyStamp = table.Column<string>(nullable: true),
+                    PhoneNumber = table.Column<string>(nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
+                    LockoutEnabled = table.Column<bool>(nullable: false),
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    FirstName = table.Column<string>(nullable: true),
+                    LastName = table.Column<string>(nullable: true),
+                    IsDelete = table.Column<bool>(nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    CreateBy = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "BillStatuses",
                 columns: table => new
                 {
@@ -161,18 +205,6 @@ namespace SaintJudeHospital.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Roles",
-                columns: table => new
-                {
-                    RoleId = table.Column<int>(nullable: false),
-                    Name = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Roles", x => x.RoleId);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Symtoms",
                 columns: table => new
                 {
@@ -197,6 +229,112 @@ namespace SaintJudeHospital.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_VaccineTypes", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetRoleClaims",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    RoleId = table.Column<string>(nullable: false),
+                    ClaimType = table.Column<string>(nullable: true),
+                    ClaimValue = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetRoleClaims", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserClaims",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    UserId = table.Column<string>(nullable: false),
+                    ClaimType = table.Column<string>(nullable: true),
+                    ClaimValue = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserClaims", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetUserClaims_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserLogins",
+                columns: table => new
+                {
+                    LoginProvider = table.Column<string>(nullable: false),
+                    ProviderKey = table.Column<string>(nullable: false),
+                    ProviderDisplayName = table.Column<string>(nullable: true),
+                    UserId = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserLogins", x => new { x.LoginProvider, x.ProviderKey });
+                    table.ForeignKey(
+                        name: "FK_AspNetUserLogins_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserRoles",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(nullable: false),
+                    RoleId = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserRoles", x => new { x.UserId, x.RoleId });
+                    table.ForeignKey(
+                        name: "FK_AspNetUserRoles_AspNetRoles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AspNetUserRoles_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserTokens",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(nullable: false),
+                    LoginProvider = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: false),
+                    Value = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserTokens", x => new { x.UserId, x.LoginProvider, x.Name });
+                    table.ForeignKey(
+                        name: "FK_AspNetUserTokens_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -273,29 +411,6 @@ namespace SaintJudeHospital.Migrations
                         column: x => x.PatientStatusId,
                         principalTable: "PatientStatuses",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Users",
-                columns: table => new
-                {
-                    UserId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    FirstName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true),
-                    Username = table.Column<string>(nullable: true),
-                    Password = table.Column<string>(nullable: true),
-                    RoleId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Users", x => x.UserId);
-                    table.ForeignKey(
-                        name: "FK_Users_Roles_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "Roles",
-                        principalColumn: "RoleId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -631,7 +746,7 @@ namespace SaintJudeHospital.Migrations
                     { 66, "Phenoxymethylpenicillin K" },
                     { 74, "Pyrantel Pamoate" },
                     { 43, "Gentamicin IV" },
-                    { 10, "Bambuterol" },
+                    { 9, "Bacillus Clausii" },
                     { 41, "Furazolidone" },
                     { 18, "Cefaclor + Guaifenesin" },
                     { 17, "Cefaclor" },
@@ -641,7 +756,7 @@ namespace SaintJudeHospital.Migrations
                     { 13, "Brompheniramine Maleate + Phenylpropanolamine" },
                     { 12, "Brompheniramine Maleate + Phenylephrine" },
                     { 11, "Betaine Glucuronate Plus" },
-                    { 9, "Bacillus Clausii" },
+                    { 10, "Bambuterol" },
                     { 8, "Azithromycin" },
                     { 7, "Ampicillin IV" },
                     { 6, "Amoxicillin" },
@@ -661,8 +776,8 @@ namespace SaintJudeHospital.Migrations
                     { 36, "Ferrous Gluconate" },
                     { 34, "Eperisone HCI" },
                     { 33, "Doxofylline" },
-                    { 32, "Domperidone" },
                     { 40, "Fucidic Acid + Hydrocortisone" },
+                    { 32, "Domperidone" },
                     { 35, "Erythromycin" },
                     { 30, "Dg Milk" },
                     { 29, "Cotrimoxazole" },
@@ -714,37 +829,28 @@ namespace SaintJudeHospital.Migrations
                     { 20, "Solution" },
                     { 21, "Suppository" },
                     { 22, "Suspension" },
-                    { 26, "Bottle" },
+                    { 28, "Can" },
                     { 24, "Tablet" },
                     { 25, "Tube" },
-                    { 28, "Can" },
+                    { 26, "Bottle" },
                     { 27, "Nasal Spray" },
                     { 16, "Pediatric Capsule" },
                     { 23, "Syrup" },
                     { 15, "Oral Solution" },
-                    { 3, "Campsuele" },
+                    { 2, "Amp" },
                     { 13, "Ointment" },
                     { 14, "Oral Gel" },
                     { 1, "Ai Lotion" },
-                    { 4, "Cream" },
+                    { 3, "Campsuele" },
                     { 5, "Drops" },
                     { 6, "Eyedrops" },
-                    { 2, "Amp" },
+                    { 4, "Cream" },
                     { 8, "Lotion" },
                     { 9, "MDI" },
                     { 10, "Nail Lacquer" },
                     { 11, "Nasal Drops" },
                     { 12, "Nebule" },
                     { 7, "Granules" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Roles",
-                columns: new[] { "RoleId", "Name" },
-                values: new object[,]
-                {
-                    { 1, "Administrator" },
-                    { 2, "StandardUser" }
                 });
 
             migrationBuilder.InsertData(
@@ -759,18 +865,18 @@ namespace SaintJudeHospital.Migrations
                     { 24, null, "Pain urination" },
                     { 25, null, "Rushes" },
                     { 27, null, "LBM" },
-                    { 34, null, "Eye discharge" },
+                    { 33, null, "Urticarial rash" },
                     { 29, null, "Dysuria" },
                     { 30, null, "Rashes" },
                     { 31, null, "Dysphagia" },
                     { 32, null, "Vaginal Discharge" },
-                    { 33, null, "Urticarial rash" },
                     { 20, null, "Joint pain" },
+                    { 34, null, "Eye discharge" },
                     { 35, null, "Chest gurgling" },
                     { 36, null, "Epistaxis" },
                     { 28, null, "Vomiting" },
                     { 19, null, "Mass" },
-                    { 12, null, "Hair fall" },
+                    { 13, null, "Abdominal pain" },
                     { 17, null, "Itchness" },
                     { 37, null, "Pustules" },
                     { 1, null, "Bleeding" },
@@ -784,7 +890,7 @@ namespace SaintJudeHospital.Migrations
                     { 9, null, "Ear ache/pain" },
                     { 10, null, "Constipation" },
                     { 11, null, "Diarrhea" },
-                    { 13, null, "Abdominal pain" },
+                    { 12, null, "Hair fall" },
                     { 14, null, "Deformity" },
                     { 15, null, "Headache" },
                     { 16, null, "Infected wounds" },
@@ -798,7 +904,6 @@ namespace SaintJudeHospital.Migrations
                 values: new object[,]
                 {
                     { 40, 10, "1mg", 7, null },
-                    { 197, 83, "5mgm/ml", 73, 23 },
                     { 190, 80, "100mg/5ml", 16, 23 },
                     { 175, 74, null, 11, 23 },
                     { 173, 73, "2mg/ml", 46, 23 },
@@ -806,9 +911,9 @@ namespace SaintJudeHospital.Migrations
                     { 166, 69, null, 13, 23 },
                     { 152, 60, "100mg/5ml", 1, 23 },
                     { 147, 58, "25mg/1ml", 53, 23 },
-                    { 206, 87, "3.3g/5ml", 49, 23 },
                     { 143, 56, "15mg/2.5ml", 4, 23 },
-                    { 132, 51, null, 83, 23 },
+                    { 197, 83, "5mgm/ml", 73, 23 },
+                    { 141, 56, "30mg/5ml", 4, 23 },
                     { 124, 47, null, 68, 23 },
                     { 123, 46, null, 13, 23 },
                     { 120, 45, "100mg/5ml", 33, 23 },
@@ -816,11 +921,11 @@ namespace SaintJudeHospital.Migrations
                     { 81, 27, null, 67, 23 },
                     { 80, 27, "5mg/1mg/5ml", 67, 23 },
                     { 79, 26, null, 76, 23 },
-                    { 141, 56, "30mg/5ml", 4, 23 },
                     { 78, 25, "1.5mg/5ml", 81, 23 },
-                    { 211, 91, "120mg/5ml", 64, 23 },
-                    { 215, 92, "250mg/5ml", 64, 23 },
-                    { 298, 133, null, 76, 23 },
+                    { 132, 51, null, 83, 23 },
+                    { 74, 24, "250mg/5ml", 64, 23 },
+                    { 206, 87, "3.3g/5ml", 49, 23 },
+                    { 212, 91, "250mg/5ml", 64, 23 },
                     { 296, 132, "100mg/5ml", 16, 23 },
                     { 283, 127, null, 36, 23 },
                     { 276, 124, "20mg/5ml", 71, 23 },
@@ -828,9 +933,9 @@ namespace SaintJudeHospital.Migrations
                     { 270, 120, "1.5mg/5ml", 81, 23 },
                     { 268, 118, "2mg/5ml", 75, 23 },
                     { 262, 115, null, 57, 23 },
-                    { 212, 91, "250mg/5ml", 64, 23 },
                     { 261, 114, "20mg/5ml", 71, 23 },
-                    { 242, 107, "125mg/5ml", 23, 23 },
+                    { 211, 91, "120mg/5ml", 64, 23 },
+                    { 260, 113, "10mg/5ml", 72, 23 },
                     { 240, 106, null, 13, 23 },
                     { 232, 102, "20mg/5ml", 71, 23 },
                     { 228, 99, "26.7mg/5ml", 82, 23 },
@@ -838,10 +943,11 @@ namespace SaintJudeHospital.Migrations
                     { 220, 95, "250mg/12.5mg", 65, 23 },
                     { 218, 94, null, 13, 23 },
                     { 216, 93, "250mg/5ml", 64, 23 },
-                    { 260, 113, "10mg/5ml", 72, 23 },
-                    { 74, 24, "250mg/5ml", 64, 23 },
+                    { 215, 92, "250mg/5ml", 64, 23 },
+                    { 242, 107, "125mg/5ml", 23, 23 },
+                    { 298, 133, null, 76, 23 },
                     { 68, 22, "1mg/1ml", 10, 23 },
-                    { 56, 16, null, 76, 23 },
+                    { 55, 15, "2mg/5ml", 75, 23 },
                     { 285, 128, "125mg/5ml", 19, 22 },
                     { 284, 128, "250mg/5ml", 19, 22 },
                     { 274, 122, "125mg/5ml", 27, 22 },
@@ -861,10 +967,9 @@ namespace SaintJudeHospital.Migrations
                     { 225, 97, "250mg/5ml", 28, 22 },
                     { 224, 97, "125mg/5ml", 28, 22 },
                     { 247, 108, "125mg/5ml", 27, 22 },
+                    { 56, 16, null, 76, 23 },
                     { 304, 136, "250mg/5ml", 64, 22 },
-                    { 312, 137, "100mg/5ml", 20, 22 },
                     { 315, 138, "400mg/80/5ml", 29, 22 },
-                    { 55, 15, "2mg/5ml", 75, 23 },
                     { 51, 14, null, 76, 23 },
                     { 50, 13, "2mg/5ml", 75, 23 },
                     { 45, 11, "100mg/5ml", 33, 23 },
@@ -873,8 +978,8 @@ namespace SaintJudeHospital.Migrations
                     { 27, 6, "120mg/5ml", 64, 23 },
                     { 22, 4, "5mg/5ml", 22, 23 },
                     { 20, null, "1.5mg/5ml", 81, 23 },
+                    { 312, 137, "100mg/5ml", 20, 22 },
                     { 18, 3, "5mg/5ml", 22, 23 },
-                    { 13, 1, "2mg/5ml", 75, 23 },
                     { 346, 151, "200mg/5ml", 8, 22 },
                     { 344, 150, "125mg/5ml", 21, 22 },
                     { 343, 150, "250mg/5ml", 21, 22 },
@@ -883,11 +988,10 @@ namespace SaintJudeHospital.Migrations
                     { 331, 145, "250mg/5ml", 19, 22 },
                     { 329, 144, "250mg/5ml", 17, 22 },
                     { 328, 144, "125mg/5ml", 17, 22 },
+                    { 13, 1, "2mg/5ml", 75, 23 },
                     { 305, 136, "120mg/5ml", 64, 23 },
-                    { 193, 81, null, 3, 22 },
                     { 307, 136, "250mg/5ml", 64, 23 },
-                    { 327, 143, "5mg/5ml", 32, 23 },
-                    { 290, 130, "10mg", 56, 24 },
+                    { 323, 141, null, 76, 23 },
                     { 267, 118, "2mg", 75, 24 },
                     { 210, 90, "50mg", 34, 24 },
                     { 205, 86, "10mg", 32, 24 },
@@ -895,9 +999,9 @@ namespace SaintJudeHospital.Migrations
                     { 202, 85, "10mg", 56, 24 },
                     { 201, 85, "5mg", 56, 24 },
                     { 200, 84, "4mg", 56, 24 },
-                    { 291, 130, "5mg", 56, 24 },
                     { 199, 84, "10mg", 56, 24 },
-                    { 196, 83, "50mgm", 73, 24 },
+                    { 290, 130, "10mg", 56, 24 },
+                    { 198, 84, "5mg", 56, 24 },
                     { 195, 83, "25mgm", 73, 24 },
                     { 192, 81, null, 3, 24 },
                     { 188, 78, "250mg", 24, 24 },
@@ -905,11 +1009,11 @@ namespace SaintJudeHospital.Migrations
                     { 183, 77, "250mg", 24, 24 },
                     { 181, 77, "500mg", 24, 24 },
                     { 179, 75, "5mg", 56, 24 },
-                    { 198, 84, "5mg", 56, 24 },
                     { 178, 75, "10mg", 56, 24 },
-                    { 292, 130, "4mg", 56, 24 },
-                    { 295, 131, "275mg", 59, 24 },
-                    { 281, 126, null, 80, 27 },
+                    { 196, 83, "50mgm", 73, 24 },
+                    { 177, 75, "4mg", 56, 24 },
+                    { 291, 130, "5mg", 56, 24 },
+                    { 294, 131, "550mg", 59, 24 },
                     { 222, 96, null, 80, 27 },
                     { 208, 88, null, 80, 27 },
                     { 62, 18, "27.5mgm/spray", 38, 27 },
@@ -917,9 +1021,9 @@ namespace SaintJudeHospital.Migrations
                     { 67, 21, "Cream", 58, 25 },
                     { 352, 89, "30mg", 4, 24 },
                     { 349, 152, "200mg", 2, 24 },
-                    { 294, 131, "550mg", 59, 24 },
                     { 348, 152, "400mg", 2, 24 },
-                    { 345, 151, "500mg", 8, 24 },
+                    { 292, 130, "4mg", 56, 24 },
+                    { 347, 152, "250mg", 8, 24 },
                     { 341, 149, "250mg", 8, 24 },
                     { 340, 149, "500mg", 8, 24 },
                     { 335, 146, "5mg", 50, 24 },
@@ -927,11 +1031,11 @@ namespace SaintJudeHospital.Migrations
                     { 309, 136, "325mg", 64, 24 },
                     { 308, 136, "500mg", 64, 24 },
                     { 306, 136, "250mg", 64, 24 },
-                    { 347, 152, "250mg", 8, 24 },
-                    { 177, 75, "4mg", 56, 24 },
+                    { 295, 131, "275mg", 59, 24 },
+                    { 345, 151, "500mg", 8, 24 },
                     { 174, 73, "10mg", 46, 24 },
                     { 172, 73, "25mg", 46, 24 },
-                    { 48, 12, "500mg", 51, 24 },
+                    { 157, 64, "100mg", 41, 24 },
                     { 46, 12, "100mg", 51, 24 },
                     { 44, 11, "100mg", 33, 24 },
                     { 29, 7, "30mg", 4, 24 },
@@ -939,9 +1043,9 @@ namespace SaintJudeHospital.Migrations
                     { 25, 5, "325mg", 64, 24 },
                     { 24, 5, "250mg", 64, 24 },
                     { 21, 4, "10mg", 22, 24 },
-                    { 54, 15, "2mg", 75, 24 },
                     { 12, 1, "2mg", 75, 24 },
-                    { 6, null, "20mg", 71, 24 },
+                    { 48, 12, "500mg", 51, 24 },
+                    { 7, null, "5mg", 71, 24 },
                     { 5, null, "30mg", 71, 24 },
                     { 4, null, "375mg", 28, 24 },
                     { 1, null, "10mg", 22, 24 },
@@ -949,11 +1053,11 @@ namespace SaintJudeHospital.Migrations
                     { 353, 89, "30mg/5ml", 4, 23 },
                     { 338, 147, null, 13, 23 },
                     { 334, 146, "5mg/ml", 50, 23 },
-                    { 7, null, "5mg", 71, 24 },
+                    { 327, 143, "5mg/5ml", 32, 23 },
+                    { 6, null, "20mg", 71, 24 },
+                    { 54, 15, "2mg", 75, 24 },
                     { 57, 17, "625mg", 28, 24 },
                     { 63, 19, "500mg", 8, 24 },
-                    { 64, 19, "250mg", 8, 24 },
-                    { 157, 64, "100mg", 41, 24 },
                     { 150, 59, "275mg", 59, 24 },
                     { 149, 59, "550mg", 59, 24 },
                     { 146, 58, "500mg", 53, 24 },
@@ -972,9 +1076,10 @@ namespace SaintJudeHospital.Migrations
                     { 73, 24, "500mg", 64, 24 },
                     { 69, 22, "10mg", 10, 24 },
                     { 66, 20, "4oomg/80mg", 29, 24 },
-                    { 323, 141, null, 76, 23 },
-                    { 119, 44, "400mg", 30, 28 },
+                    { 64, 19, "250mg", 8, 24 },
+                    { 193, 81, null, 3, 22 },
                     { 187, 78, "125mg/5ml", 24, 22 },
+                    { 186, 78, "250mg/5ml", 24, 22 },
                     { 184, 77, "250mg/5ml", 24, 22 },
                     { 92, 30, "50mg/ml", 18, 5 },
                     { 89, 29, "100mg/ml", 64, 5 },
@@ -1062,7 +1167,7 @@ namespace SaintJudeHospital.Migrations
                     { 130, 49, "500mg", 52, 3 },
                     { 129, 49, "250mg", 52, 3 },
                     { 297, 132, "50mg/ml", 16, 5 },
-                    { 186, 78, "250mg/5ml", 24, 22 },
+                    { 281, 126, null, 80, 27 },
                     { 310, 136, "100mg/ml", 64, 5 },
                     { 317, 139, "20mg/ml", 20, 5 },
                     { 72, 24, "120mg/5ml", 64, 22 },
@@ -1150,13 +1255,48 @@ namespace SaintJudeHospital.Migrations
                     { 131, 50, null, 77, 12 },
                     { 116, 41, null, 77, 12 },
                     { 53, 15, "2.5mg/2.5ml", 75, 12 },
-                    { 314, 137, "20mg/ml", 20, 5 }
+                    { 314, 137, "20mg/ml", 20, 5 },
+                    { 119, 44, "400mg", 30, 28 }
                 });
 
-            migrationBuilder.InsertData(
-                table: "Users",
-                columns: new[] { "UserId", "FirstName", "LastName", "Password", "RoleId", "Username" },
-                values: new object[] { 1, "Carl", "Tanilon", "1234", 1, "carl" });
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetRoleClaims_RoleId",
+                table: "AspNetRoleClaims",
+                column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "RoleNameIndex",
+                table: "AspNetRoles",
+                column: "NormalizedName",
+                unique: true,
+                filter: "[NormalizedName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUserClaims_UserId",
+                table: "AspNetUserClaims",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUserLogins_UserId",
+                table: "AspNetUserLogins",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUserRoles_RoleId",
+                table: "AspNetUserRoles",
+                column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "EmailIndex",
+                table: "AspNetUsers",
+                column: "NormalizedEmail");
+
+            migrationBuilder.CreateIndex(
+                name: "UserNameIndex",
+                table: "AspNetUsers",
+                column: "NormalizedUserName",
+                unique: true,
+                filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Bills_BillStatusId",
@@ -1209,11 +1349,6 @@ namespace SaintJudeHospital.Migrations
                 column: "PatientStatusId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_RoleId",
-                table: "Users",
-                column: "RoleId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_VaccinePatients_CheckupId",
                 table: "VaccinePatients",
                 column: "CheckupId");
@@ -1237,6 +1372,21 @@ namespace SaintJudeHospital.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "AspNetRoleClaims");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserClaims");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserLogins");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserRoles");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
                 name: "Bills");
 
             migrationBuilder.DropTable(
@@ -1258,10 +1408,13 @@ namespace SaintJudeHospital.Migrations
                 name: "Symtoms");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "VaccinePatients");
 
             migrationBuilder.DropTable(
-                name: "VaccinePatients");
+                name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "BillStatuses");
@@ -1274,9 +1427,6 @@ namespace SaintJudeHospital.Migrations
 
             migrationBuilder.DropTable(
                 name: "Inscriptions");
-
-            migrationBuilder.DropTable(
-                name: "Roles");
 
             migrationBuilder.DropTable(
                 name: "Checkups");

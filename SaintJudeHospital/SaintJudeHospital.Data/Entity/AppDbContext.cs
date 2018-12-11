@@ -1,18 +1,16 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using SaintJudeHospital.Data.Indentity;
 using SaintJudeHospital.Data.Seed;
 
 namespace SaintJudeHospital.Data.Entity
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext<ApplicationUser>
     {
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
         {
         }
-
-        public DbSet<User> Users { set; get; }
-
-        public DbSet<Role> Roles { set; get; }
 
         public DbSet<Symtom> Symtoms { set; get; }
 
@@ -52,7 +50,9 @@ namespace SaintJudeHospital.Data.Entity
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            AppDbContextInitializer.Load(builder);
+            AppDbContextInitializer.LoadDefaultData(builder);
+
+            base.OnModelCreating(builder);
         }
     }
 }

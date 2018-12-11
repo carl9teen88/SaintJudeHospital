@@ -1,5 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
 using SaintJudeHospital.Data.Entity;
+using SaintJudeHospital.Data.Indentity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,12 +14,10 @@ namespace SaintJudeHospital.Data.Seed
     {
         private static ModelBuilder _builder;
 
-        public static void Load(ModelBuilder builder)
+        public static void LoadDefaultData(ModelBuilder builder)
         {
             _builder = builder;
 
-            UsersRole();
-            Users();
             Immunizes.Data(builder);
             Symtoms.Data(builder);
             Brands.Data(builder);
@@ -25,17 +26,34 @@ namespace SaintJudeHospital.Data.Seed
             Medicines.Data(builder);
         }
 
-        private static void UsersRole()
+        public static void LoadApplicationUser(IServiceProvider serviceProvider)
         {
-            _builder.Entity<Role>().HasData(
-                new Role { RoleId = 1, Name = "Administrator" },
-                new Role { RoleId = 2, Name = "StandardUser"});
-        }
+            var context = serviceProvider.GetRequiredService<AppDbContext>();
 
-        private static void Users()
-        {
-            _builder.Entity<User>().HasData(
-                new User { FirstName = "Carl", LastName = "Tanilon", Password = "1234", RoleId = 1, Username = "carl" , UserId = 1});
-        }   
+            var manager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+
+            context.Database.EnsureCreated();
+
+            if(!context.Users.Any())
+            {
+                var user = new ApplicationUser
+                {
+                    Email = "dharl072810@gmail.com",
+                    SecurityStamp = Guid.NewGuid().ToString(),
+                    UserName = "dharl",
+                    FirstName = "Carl",
+                    LastName = "Tanilon",
+                    CreatedDate = DateTime.Now,
+                    IsDelete = false,
+                    PhoneNumber = "09177080814",
+                    PhoneNumberConfirmed = true,
+                    EmailConfirmed = true
+                };
+
+                var result = manager.CreateAsync(user, "Dharl_143");
+
+                context.SaveChanges();
+            }
+        }
     }
 }

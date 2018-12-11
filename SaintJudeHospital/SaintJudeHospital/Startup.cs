@@ -1,17 +1,21 @@
 using System.Linq;
+using System.Text;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using SaintJudeHospital.Data.Entity;
+using SaintJudeHospital.Data.Indentity;
+using SaintJudeHospital.Data.Seed;
 using SaintJudeHospital.Mediators;
 using SaintJudeHospital.Services;
-using SaintJudeHospital.Services.Impl;
-using SaintJudeHospital.Services.Interfaces;
 
 namespace SaintJudeHospital
 {
@@ -40,6 +44,31 @@ namespace SaintJudeHospital
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("SaintJudeHospital")));
 
+            services
+                .AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<AppDbContext>()
+                .AddDefaultTokenProviders();
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.SaveToken = true;
+                options.RequireHttpsMetadata = false;
+                options.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidAudience = "https://localhost:44363",
+                    ValidIssuer = "https://localhost:44363",
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("SaintJudeSecurityKey"))
+                };
+            });
+
             BuildDataServices(services);
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
@@ -61,6 +90,12 @@ namespace SaintJudeHospital
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            app.UseAuthentication();
+
+            AppDbContextInitializer.LoadApplicationUser(app.ApplicationServices
+                .GetRequiredService<IServiceScopeFactory>()
+                .CreateScope()
+                .ServiceProvider);
 
             app.UseMvc(routes =>
             {
