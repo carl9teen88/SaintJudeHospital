@@ -10,7 +10,7 @@ namespace SaintJudeHospital.Mediators.Queries.Generics
         public string Name { set; get; }
     }
 
-    public class GenericQueryIemResult
+    public class GenericQuerySingleResult
     {
         public GenericQueryResult Generic { set; get; }
         public bool IsSuccess {

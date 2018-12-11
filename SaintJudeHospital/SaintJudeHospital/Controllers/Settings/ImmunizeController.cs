@@ -4,11 +4,13 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SaintJudeHospital.Mediators.Queries.Immunize;
 
-namespace SaintJudeHospital.Controllers
+namespace SaintJudeHospital.Controllers.Settings
 {
+    [Authorize]
     public class ImmunizeController : Controller
     {
         private readonly IMediator _mediator;

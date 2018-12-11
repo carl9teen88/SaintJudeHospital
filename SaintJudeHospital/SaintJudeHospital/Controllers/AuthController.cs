@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -12,9 +13,7 @@ using SaintJudeHospital.Data.Indentity;
 using SaintJudeHospital.Model;
 
 namespace SaintJudeHospital.Controllers
-{
-
-    [Route("api/[controller]")]
+{        
     public class AuthController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -25,7 +24,6 @@ namespace SaintJudeHospital.Controllers
         }
         
         [HttpPost]
-        [Route("login")]
         public async Task<IActionResult> Login([FromBody] LoginModel model)
         {
             var user = await _userManager.FindByNameAsync(model.Username);
@@ -43,7 +41,7 @@ namespace SaintJudeHospital.Controllers
                 var token = new JwtSecurityToken(
                     issuer: "https://localhost:44363",
                     audience: "https://localhost:44363",
-                    expires: DateTime.UtcNow.AddHours(1),
+                    expires: DateTime.UtcNow.AddHours(12),
                     claims: claims,
                     signingCredentials: new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256)
                     );

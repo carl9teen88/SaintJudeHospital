@@ -4,11 +4,13 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SaintJudeHospital.Mediators.Queries.Generics;
 
-namespace SaintJudeHospital.Controllers
+namespace SaintJudeHospital.Controllers.Settings
 {
+    [Authorize]
     public class GenericsController : Controller
     {
         private readonly IMediator _mediator;
@@ -33,11 +35,11 @@ namespace SaintJudeHospital.Controllers
         {
             var generic = _mediator.Send(new GenericQueryById { Id = id }).Result;
 
-            if (generic.IsSuccess)
+            if (generic.Success)
             {
                 return Json(new
                 {
-                    Data = generic,
+                    Data = generic.Data,
                     Status = HttpStatusCode.OK
                 });
             }
@@ -46,7 +48,7 @@ namespace SaintJudeHospital.Controllers
                 return Json(new
                 {
                     Status = HttpStatusCode.BadRequest,
-                    Message = "Generic id not found."
+                    Message = generic.ErrorMessage
                 });
             }
         }
@@ -55,11 +57,11 @@ namespace SaintJudeHospital.Controllers
         {
             var generic = _mediator.Send(new GenericQueryByName { Name = name }).Result;
 
-            if(generic.IsSuccess)
+            if(generic.Success)
             {
                 return Json(new
                 {
-                    Data = generic,
+                    Data = generic.Data,
                     Status = HttpStatusCode.OK
                 });
             }
@@ -68,7 +70,7 @@ namespace SaintJudeHospital.Controllers
                 return Json(new
                 {
                     Status = HttpStatusCode.BadRequest,
-                    Message = "Generic name not found."
+                    Message = generic.ErrorMessage
                 });
             }
         }
