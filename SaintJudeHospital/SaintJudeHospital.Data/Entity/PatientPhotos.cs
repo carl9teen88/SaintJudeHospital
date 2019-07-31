@@ -6,11 +6,15 @@ using System.Text;
 
 namespace SaintJudeHospital.Data.Entity
 {
-    public class Generic
+    public class PatientPhotos
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public int Id { set; get; }
-        public string Name { set; get; }
+        public string Path { set; get; }
+        public int? PatientId { set; get; }
+        public bool IsPrimary { set; get; }
+        public bool IsDeleted { set; get; }
+        public virtual Patient Patient { set; get; }
     }
 }

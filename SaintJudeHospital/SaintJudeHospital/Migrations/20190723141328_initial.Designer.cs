@@ -10,14 +10,14 @@ using SaintJudeHospital.Data.Entity;
 namespace SaintJudeHospital.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20181211053103_initial")]
+    [Migration("20190723141328_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
+                .HasAnnotation("ProductVersion", "2.1.11-servicing-32099")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -137,29 +137,36 @@ namespace SaintJudeHospital.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<decimal>("Balance");
+                    b.Property<decimal>("Balance")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("BillStatusId");
 
                     b.Property<int>("CheckupId");
 
-                    b.Property<decimal>("ConsultationFee");
+                    b.Property<decimal>("ConsultationFee")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("CreatedDate");
 
-                    b.Property<decimal>("EarPiercingFee");
+                    b.Property<decimal>("EarPiercingFee")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<decimal>("FollowUpFee");
+                    b.Property<decimal>("FollowUpFee")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<decimal>("NebulizationFee");
+                    b.Property<decimal>("NebulizationFee")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<decimal>("PPDFee");
+                    b.Property<decimal>("PPDFee")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("PatientId");
 
                     b.Property<string>("PayProcess");
 
-                    b.Property<decimal>("TotalPayment");
+                    b.Property<decimal>("TotalPayment")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("VaccineInfo");
 
@@ -504,7 +511,8 @@ namespace SaintJudeHospital.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<decimal>("Amount");
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Name");
 
@@ -543,7 +551,8 @@ namespace SaintJudeHospital.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<decimal>("Amount");
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("CreateDate");
 
@@ -611,6 +620,146 @@ namespace SaintJudeHospital.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Laboratories");
+
+                    b.HasData(
+                        new { Id = 1, Name = "75 gms.OGTT" },
+                        new { Id = 2, Name = "Acid Fast Bacili Staining(AFB)" },
+                        new { Id = 3, Name = "24 Urine Cortisol" },
+                        new { Id = 4, Name = "50 gms.OGTT" },
+                        new { Id = 5, Name = "* Alpha - fetoprotein(AFP)" },
+                        new { Id = 6, Name = "* Amylase(Urine)" },
+                        new { Id = 7, Name = "* Amylase(Blood)" },
+                        new { Id = 8, Name = "2 HPPBS" },
+                        new { Id = 9, Name = "* Acid Phosphatase(ACP)" },
+                        new { Id = 10, Name = "Acid Phosphatase(Prostatic ACP)" },
+                        new { Id = 11, Name = "100 gms.OGTT" },
+                        new { Id = 12, Name = "Albumin / Globulin(Alb / Glob)" },
+                        new { Id = 13, Name = "* ANA(Screening and Panel)" },
+                        new { Id = 14, Name = "* Anti - HAV lgM" },
+                        new { Id = 15, Name = "Alkaline Phosphatase(ALP)" },
+                        new { Id = 16, Name = "* Anti - HBc lgM" },
+                        new { Id = 17, Name = "* Anti - Hav Total" },
+                        new { Id = 18, Name = "* Anti - HBe" },
+                        new { Id = 19, Name = "* Anti - HBc Total" },
+                        new { Id = 20, Name = "* Anti - streptolysin O Titer(ASO Titer)" },
+                        new { Id = 21, Name = "* Anti - HCV(Screening)" },
+                        new { Id = 22, Name = "* Anti - H.Pylori" },
+                        new { Id = 23, Name = "* Anti - HCV EIA" },
+                        new { Id = 24, Name = "* Anti - HBs(Semi - QUanti)" },
+                        new { Id = 25, Name = "* Anti - HBs Titer" },
+                        new { Id = 26, Name = "Beta - HCG / Dilution(Urine)" },
+                        new { Id = 27, Name = "* Beta - HCG(Blood)" },
+                        new { Id = 28, Name = "Biliribin - Direct / Indirect(DB / IB)" },
+                        new { Id = 29, Name = "* Biopsy(Small)" },
+                        new { Id = 30, Name = "Blood Urea Nitrogen(BUN)" },
+                        new { Id = 31, Name = "Blood Indices" },
+                        new { Id = 32, Name = "Blood Typing(BT)" },
+                        new { Id = 33, Name = "* Biopsy(Lagre)" },
+                        new { Id = 34, Name = "Bilirubin - Total(TB)" },
+                        new { Id = 35, Name = "Blood Uric Acid(BUA)" },
+                        new { Id = 36, Name = "* C3 700 - W / I" },
+                        new { Id = 37, Name = "* Carcino - embryonic Ag(CEA)" },
+                        new { Id = 38, Name = "Calcium(Urine Ca++)" },
+                        new { Id = 39, Name = "* C4 750 - W / I" },
+                        new { Id = 40, Name = "* CA 19.9" },
+                        new { Id = 41, Name = "* CA 15.3" },
+                        new { Id = 42, Name = "* CA 125" },
+                        new { Id = 43, Name = "* C - Reactive Protein(CRP)" },
+                        new { Id = 44, Name = "Calcium(Blood Ca++)" },
+                        new { Id = 45, Name = "* Cortisol" },
+                        new { Id = 46, Name = "* Cholinesterase - Serum" },
+                        new { Id = 47, Name = "Complete Blood Count(CBC)" },
+                        new { Id = 48, Name = "* Creatine Kinase(CK - MB)" },
+                        new { Id = 49, Name = "Creatinine Total(Urine)" },
+                        new { Id = 50, Name = "Cerebrospinal Fluid Routine(CSF)" },
+                        new { Id = 51, Name = "Chloride(CI -)" },
+                        new { Id = 52, Name = "Chlamydia w / Check - up" },
+                        new { Id = 53, Name = "Cholesterol - Total" },
+                        new { Id = 54, Name = "Cholesterol(HDL / VLD / LDL)" },
+                        new { Id = 55, Name = "Cholinesterase - RBC" },
+                        new { Id = 56, Name = "Creatinine(Blood)" },
+                        new { Id = 57, Name = "Dengue NS1 Ag" },
+                        new { Id = 58, Name = "* DsDNA" },
+                        new { Id = 59, Name = "Erythrocyte Sedimentation Rate(ESR)" },
+                        new { Id = 60, Name = "* Estradiol" },
+                        new { Id = 61, Name = "Free Thyroxine(FT4)" },
+                        new { Id = 62, Name = "* Free Triiodothyronine(FT3)" },
+                        new { Id = 63, Name = "Gamma - GT(GGT)" },
+                        new { Id = 64, Name = "* Ferritin" },
+                        new { Id = 65, Name = "Clotting Time - Bleeding Time(CT - BT)" },
+                        new { Id = 66, Name = "Fasting Blood Sugar(FBS)" },
+                        new { Id = 67, Name = "Eosinophils" },
+                        new { Id = 68, Name = "Hepatitis B Profile" },
+                        new { Id = 69, Name = "Ketones" },
+                        new { Id = 70, Name = "KOH" },
+                        new { Id = 71, Name = "Hemoglucotest(HGT)" },
+                        new { Id = 72, Name = "Hematocrit(Hct)" },
+                        new { Id = 73, Name = "Gonorrhea w / Check - up" },
+                        new { Id = 74, Name = "* Lactate Dehydrogenase(LDH)" },
+                        new { Id = 75, Name = "L.E.Preparation" },
+                        new { Id = 76, Name = "Lipid Profile" },
+                        new { Id = 77, Name = "Liver Profile" },
+                        new { Id = 78, Name = "* Luteinizing Hormone(LH)" },
+                        new { Id = 79, Name = "* Magnesium(Mg + 2)" },
+                        new { Id = 80, Name = "MCA" },
+                        new { Id = 81, Name = "Micral Test" },
+                        new { Id = 82, Name = "Glycosylated Hemoglobin(HbA1C)" },
+                        new { Id = 83, Name = "Gram Staining(G / S)" },
+                        new { Id = 84, Name = "Hemoglobin(Hgb)" },
+                        new { Id = 85, Name = "HBsAg(Screening)" },
+                        new { Id = 86, Name = "* HBsAg(EIA)" },
+                        new { Id = 87, Name = "* HBeAg" },
+                        new { Id = 88, Name = "Pregnancy Test(PT)" },
+                        new { Id = 89, Name = "Potassium(Urine K +)" },
+                        new { Id = 90, Name = "Peripheral Smear" },
+                        new { Id = 91, Name = "Platelet Count(Plt.Ct.)" },
+                        new { Id = 92, Name = "* Phosphorus(Inorg)" },
+                        new { Id = 93, Name = "Newborn Screening(NBS)" },
+                        new { Id = 94, Name = "Osmotic Fragility" },
+                        new { Id = 95, Name = "Pap smear w / check up" },
+                        new { Id = 96, Name = "* Parathyroid Hormone(PTH)" },
+                        new { Id = 97, Name = "Pleural Routine" },
+                        new { Id = 98, Name = "Potassium(Blood K +)" },
+                        new { Id = 99, Name = "Occult Blood" },
+                        new { Id = 100, Name = "Malarial Smear" },
+                        new { Id = 101, Name = "* Testosterone" },
+                        new { Id = 102, Name = "* Thyroglobulin" },
+                        new { Id = 103, Name = "Thyroid Panel" },
+                        new { Id = 104, Name = "Thyroid - stimulating Hormone(TSH)" },
+                        new { Id = 105, Name = "Thyroxine(T4)" },
+                        new { Id = 106, Name = "SGOT / ASAT" },
+                        new { Id = 107, Name = "Random Blood Sugar(RBS)" },
+                        new { Id = 108, Name = "SGPT / ALAT" },
+                        new { Id = 109, Name = "* Rheumatoid Factor(RA / RF)" },
+                        new { Id = 110, Name = "Stool Exam(S / E)" },
+                        new { Id = 111, Name = "Sodium(Urine Na +)" },
+                        new { Id = 112, Name = "Sodium(Blood Na +)" },
+                        new { Id = 113, Name = "* Progesterone" },
+                        new { Id = 114, Name = "Prostate - Specific Ag(PSA Qualitative)" },
+                        new { Id = 115, Name = "* Prolcatin" },
+                        new { Id = 116, Name = "* Prostate - Specific Ag(PSA Quantitative)" },
+                        new { Id = 117, Name = "Protein Albumin(Urine)" },
+                        new { Id = 118, Name = "Reticulocyte Count(Retic.Ct.)" },
+                        new { Id = 119, Name = "Triiodothyronine(T3)" },
+                        new { Id = 120, Name = "Triglycerides" },
+                        new { Id = 121, Name = "TPHA" },
+                        new { Id = 122, Name = "Total Protein(TP)" },
+                        new { Id = 123, Name = "* Total CPK NAC" },
+                        new { Id = 124, Name = "Semen Analysis" },
+                        new { Id = 125, Name = "PTPA - Protime / Prothrombin Time" },
+                        new { Id = 126, Name = "Wet Mount" },
+                        new { Id = 127, Name = "Thphidot" },
+                        new { Id = 128, Name = "White Blood Cell Differential Count(WBC Diff.Count)" },
+                        new { Id = 129, Name = "Widal 5 Ags" },
+                        new { Id = 130, Name = "Uric Acid(Urine" },
+                        new { Id = 131, Name = "White Blood Cell Count(WBC Ct.)" },
+                        new { Id = 132, Name = "* Urobilinogen" },
+                        new { Id = 133, Name = "VDRL" },
+                        new { Id = 134, Name = "Urinalysis(U / A)" },
+                        new { Id = 135, Name = "* Troponin I(Trop.I)" },
+                        new { Id = 136, Name = "* Troponin T(Trop.T)" },
+                        new { Id = 137, Name = "Tuberculosis Ab(TB Ab)" }
+                    );
                 });
 
             modelBuilder.Entity("SaintJudeHospital.Data.Entity.MedicalCertificate", b =>
@@ -1057,9 +1206,13 @@ namespace SaintJudeHospital.Migrations
 
                     b.Property<DateTime>("DateOfBirth");
 
+                    b.Property<string>("EmailAddress");
+
                     b.Property<string>("FirstName");
 
                     b.Property<string>("Gender");
+
+                    b.Property<string>("HomePhoneNumber");
 
                     b.Property<string>("LastName");
 
@@ -1073,6 +1226,8 @@ namespace SaintJudeHospital.Migrations
 
                     b.Property<int>("PatientStatusId");
 
+                    b.Property<string>("PersonalPhoneNumber");
+
                     b.HasKey("Id");
 
                     b.HasIndex("Parent1Id");
@@ -1082,6 +1237,27 @@ namespace SaintJudeHospital.Migrations
                     b.HasIndex("PatientStatusId");
 
                     b.ToTable("Patients");
+                });
+
+            modelBuilder.Entity("SaintJudeHospital.Data.Entity.PatientPhotos", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<bool>("IsPrimary");
+
+                    b.Property<string>("Path");
+
+                    b.Property<int?>("PatientId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PatientId");
+
+                    b.ToTable("PatientPhotos");
                 });
 
             modelBuilder.Entity("SaintJudeHospital.Data.Entity.PatientStatus", b =>
@@ -1378,6 +1554,13 @@ namespace SaintJudeHospital.Migrations
                         .WithMany()
                         .HasForeignKey("PatientStatusId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("SaintJudeHospital.Data.Entity.PatientPhotos", b =>
+                {
+                    b.HasOne("SaintJudeHospital.Data.Entity.Patient", "Patient")
+                        .WithMany("PatientPhotos")
+                        .HasForeignKey("PatientId");
                 });
 
             modelBuilder.Entity("SaintJudeHospital.Data.Entity.Vaccine", b =>

@@ -80,6 +80,11 @@ namespace SaintJudeHospital
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseCors(policy => policy
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .WithOrigins("http://localhost:8081")
+                .AllowCredentials());
             }
             else
             {

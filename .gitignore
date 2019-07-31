@@ -9,6 +9,7 @@
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
+.vscode
 
 # Build results
 [Dd]ebug/
@@ -259,3 +260,8 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+
+# Exclude Scripts builds
+/**/bundle/
+
+desktop.ini

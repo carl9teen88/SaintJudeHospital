@@ -7,11 +7,12 @@ using System.Text;
 namespace SaintJudeHospital.Data.Entity
 {
     public class Immunize
-    {
-        [Key]
+    {        
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key]
         public int Id { set; get; }
         public string Name { set; get; }
+        [Column(TypeName = "decimal(18,2)")]
         public decimal Amount { set; get; }
     }
 }

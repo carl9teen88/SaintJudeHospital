@@ -24,6 +24,7 @@ namespace SaintJudeHospital.Data.Seed
             Inscriptions.Data(builder);
             Generics.Data(builder);
             Medicines.Data(builder);
+            Laboratories.Data(builder);
         }
 
         public static void LoadApplicationUser(IServiceProvider serviceProvider)

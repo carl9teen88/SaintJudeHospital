@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.106
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29020.237
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SaintJudeHospital", "SaintJudeHospital\SaintJudeHospital.csproj", "{C2F2F8CA-EC13-442A-8F4E-E9B52FC7626F}"
 EndProject
@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SaintJudeHospital.Services"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SaintJudeHospital.Mediators", "SaintJudeHospital.Mediators\SaintJudeHospital.Mediators.csproj", "{D841A329-627A-48C2-B6DE-C65FBCAB0C01}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SaintJudeHospital.Common", "SaintJudeHospital.Common\SaintJudeHospital.Common.csproj", "{9D814091-3D0D-41ED-8B11-B73263DB7A4C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SaintJudeHospital.Common", "SaintJudeHospital.Common\SaintJudeHospital.Common.csproj", "{9D814091-3D0D-41ED-8B11-B73263DB7A4C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

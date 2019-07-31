@@ -10,7 +10,7 @@ using SaintJudeHospital.Mediators.Queries.Generics;
 
 namespace SaintJudeHospital.Controllers.Settings
 {
-    [Authorize]
+    //[Authorize]
     public class GenericsController : Controller
     {
         private readonly IMediator _mediator;

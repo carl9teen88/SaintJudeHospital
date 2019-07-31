@@ -1,10 +1,15 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="favicon.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Changwei.AspNetCore.SpaServices.Extensions.VueCli" Version="1.0.0" />
     <PackageReference Include="MediatR" Version="5.1.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="5.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
@@ -16,6 +21,11 @@
   <ItemGroup>
     <ProjectReference Include="..\SaintJudeHospital.Data\SaintJudeHospital.Data.csproj" />
     <ProjectReference Include="..\SaintJudeHospital.Mediators\SaintJudeHospital.Mediators.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Web\src\store\modules\patient\" />
+    <Folder Include="wwwroot\css\master\" />
   </ItemGroup>
 
 </Project>

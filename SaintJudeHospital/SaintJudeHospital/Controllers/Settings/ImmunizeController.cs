@@ -10,7 +10,7 @@ using SaintJudeHospital.Mediators.Queries.Immunize;
 
 namespace SaintJudeHospital.Controllers.Settings
 {
-    [Authorize]
+    //[Authorize]
     public class ImmunizeController : Controller
     {
         private readonly IMediator _mediator;

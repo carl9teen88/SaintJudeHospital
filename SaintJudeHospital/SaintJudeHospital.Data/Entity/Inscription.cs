@@ -7,9 +7,9 @@ using System.Text;
 namespace SaintJudeHospital.Data.Entity
 {
     public class Inscription
-    {
-        [Key]
+    {        
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key]
         public int Id { set; get; }
 
         public string Name { set; get; }
