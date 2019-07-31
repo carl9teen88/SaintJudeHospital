@@ -5,7 +5,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Web\**" />
+    <Content Remove="Web\**" />
+    <EmbeddedResource Remove="Web\**" />
+    <None Remove="Web\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="favicon.ico" />
+    <Content Include="Web\package-lock.json" />
+    <Content Include="Web\package.json" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,8 +33,38 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Web\src\store\modules\patient\" />
     <Folder Include="wwwroot\css\master\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Web\.editorconfig" />
+    <None Include="Web\.gitignore" />
+    <None Include="Web\babel.config.js" />
+    <None Include="Web\README.md" />
+    <None Include="Web\src\App.vue" />
+    <None Include="Web\src\components\common\Notification.vue" />
+    <None Include="Web\src\components\common\Pagination.vue" />
+    <None Include="Web\src\components\Dashboard.vue" />
+    <None Include="Web\src\components\Footer.vue" />
+    <None Include="Web\src\components\income\Income.vue" />
+    <None Include="Web\src\components\Navigation.vue" />
+    <None Include="Web\src\components\patients\App.vue" />
+    <None Include="Web\src\components\patients\In-patient.vue" />
+    <None Include="Web\src\components\patients\LaboratoryRequest.vue" />
+    <None Include="Web\src\components\patients\Patient.vue" />
+    <None Include="Web\src\components\patients\Patients.vue" />
+    <None Include="Web\src\components\settings\Settings.vue" />
+    <None Include="Web\src\components\statistics\Statistics.vue" />
+    <None Include="Web\src\components\user-profile\UserProfile.vue" />
+    <None Include="Web\src\main.js" />
+    <None Include="Web\src\mock-data\laboratories.js" />
+    <None Include="Web\src\mock-data\patients.js" />
+    <None Include="Web\src\router\index.js" />
+    <None Include="Web\src\store\index.js" />
+    <None Include="Web\src\store\modules\patient-forms\in-patient.js" />
+    <None Include="Web\src\store\modules\patient-forms\lab-request.js" />
+    <None Include="Web\src\store\modules\patient.js" />
+    <None Include="Web\vue.config.js" />
   </ItemGroup>
 
 </Project>
