@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SaintJudeHospital.Mediators.Queries.Generics;
+using SaintJudeHospital.Model.Response;
 
 namespace SaintJudeHospital.Controllers.Settings
 {
-    //[Authorize]
+    [Authorize]
     public class GenericsController : Controller
     {
         private readonly IMediator _mediator;
@@ -20,57 +17,54 @@ namespace SaintJudeHospital.Controllers.Settings
             _mediator = mediator;
         }
 
-        public IActionResult GenericList(int page, int rpp = 20)
+        public async Task<IActionResult> GenericList(int page, int rpp = 20)
         {
-            var generics = _mediator.Send(new GenericQueryAll { Page = page, Rpp = rpp }).Result;
+            var generics = await _mediator.Send(new GenericQueryAll { Page = page, Rpp = rpp });
 
-            return Json(new
+            return ResponseJsonData.Ok(new ResponseOkModel
             {
-                Data = generics,
-                Status = HttpStatusCode.OK
+                Data = generics
             });
         }
 
-        public IActionResult GenericById(int id)
+        public async Task<IActionResult> GenericById(int id)
         {
-            var generic = _mediator.Send(new GenericQueryById { Id = id }).Result;
+            var generic = await _mediator.Send(new GenericQueryById { Id = id });
 
-            if (generic.Success)
+            if (generic != null)
             {
-                return Json(new
+                return ResponseJsonData.Ok(new ResponseOkModel
                 {
-                    Data = generic.Data,
-                    Status = HttpStatusCode.OK
+                    Data = generic
                 });
             }
             else
             {
-                return Json(new
+                return ResponseJsonData.Error(new ResponseErrorModel
                 {
-                    Status = HttpStatusCode.BadRequest,
-                    Message = generic.ErrorMessage
+                    Message = "Record not found.",
+                    StatusCode = StatusCodeEnum.NotFound
                 });
             }
         }
 
-        public IActionResult GenericByName(string name)
+        public async Task<IActionResult> GenericByName(string name)
         {
-            var generic = _mediator.Send(new GenericQueryByName { Name = name }).Result;
+            var generic = await _mediator.Send(new GenericQueryByName { Name = name });
 
-            if(generic.Success)
+            if(generic != null)
             {
-                return Json(new
+                return ResponseJsonData.Ok(new ResponseOkModel
                 {
-                    Data = generic.Data,
-                    Status = HttpStatusCode.OK
+                    Data = generic
                 });
             }
             else
             {
-                return Json(new
+                return ResponseJsonData.Error(new ResponseErrorModel
                 {
-                    Status = HttpStatusCode.BadRequest,
-                    Message = generic.ErrorMessage
+                    Message = $"Generic name {name} not found.",
+                    StatusCode = StatusCodeEnum.NotFound
                 });
             }
         }

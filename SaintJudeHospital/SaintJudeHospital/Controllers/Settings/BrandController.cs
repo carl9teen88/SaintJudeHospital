@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace SaintJudeHospital.Controllers.Settings
 {
-    //[Authorize]
+    [Authorize]
     public class BrandController : Controller
     {
         private readonly IMediator _mediator;

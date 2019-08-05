@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,34 +29,59 @@ namespace SaintJudeHospital.Controllers
         {
             var user = await _userManager.FindByNameAsync(model.Username);
 
-            if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
+            if (user != null)
             {
-                var claims = new[]
+                if (await _userManager.CheckPasswordAsync(user, model.Password))
                 {
+                    var claims = new[]
+                    {
                     new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
                 };
 
-                var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("SaintJudeSecurityKey"));
+                    var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("SaintJudeSecurityKey"));
 
-                var token = new JwtSecurityToken(
-                    issuer: "https://localhost:44363",
-                    audience: "https://localhost:44363",
-                    expires: DateTime.UtcNow.AddHours(12),
-                    claims: claims,
-                    signingCredentials: new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256)
-                    );
+                    var token = new JwtSecurityToken(
+                        issuer: "https://localhost:44363",
+                        audience: "https://localhost:44363",
+                        expires: DateTime.UtcNow.AddHours(12),
+                        claims: claims,
+                        signingCredentials: new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256)
+                        );
 
-                var encoded_token = new JwtSecurityTokenHandler().WriteToken(token);
+                    var encoded_token = new JwtSecurityTokenHandler().WriteToken(token);
 
+                    var userRoles = await _userManager.GetRolesAsync(user);
+
+                    return Ok(new
+                    {
+                        Data = new
+                        {
+                            Token = encoded_token,
+                            Expiration = token.ValidTo,
+                            userRoles
+                        },
+                        Message = "Success",
+                        StatusCode = HttpStatusCode.OK
+                    }); ;
+                }
+                else
+                {
+                    return Ok(new
+                    {
+                        StatusCode = HttpStatusCode.Unauthorized,
+                        Message = "Invalid password."
+                    });
+                }
+            }
+            else
+            {
                 return Ok(new
                 {
-                    Token = encoded_token,
-                    Expiration = token.ValidTo
+                    StatusCode = HttpStatusCode.Unauthorized,
+                    Message = "Invalid username."
                 });
             }
-
-            return Unauthorized();
         }
     }
 }

@@ -1,8 +1,5 @@
 ﻿using MediatR;
 using SaintJudeHospital.Services.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SaintJudeHospital.Mediators.Queries.Immunize
 {
@@ -22,13 +19,13 @@ namespace SaintJudeHospital.Mediators.Queries.Immunize
 
         protected override ImmunizeQueryResult Handle(ImmunizeQueryById request)
         {
-            var immnunize = _immunizationService.GetById(request.Id);
+            var immunize = _immunizationService.GetById(request.Id);
 
-            return new ImmunizeQueryResult
+            return immunize == null ? null : new ImmunizeQueryResult
             {
-                Id = immnunize.Id,
-                Amount = immnunize.Amount,
-                Name = immnunize.Name
+                Id = immunize.Id,
+                Amount = immunize.Amount,
+                Name = immunize.Name
             };
         }
     }

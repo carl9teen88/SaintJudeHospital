@@ -7,10 +7,11 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SaintJudeHospital.Mediators.Queries.Immunize;
+using SaintJudeHospital.Model.Response;
 
 namespace SaintJudeHospital.Controllers.Settings
 {
-    //[Authorize]
+    [Authorize]
     public class ImmunizeController : Controller
     {
         private readonly IMediator _mediator;
@@ -28,22 +29,14 @@ namespace SaintJudeHospital.Controllers.Settings
                 Rpp = rpp
             });
 
-            return Json(new
-            {
-                Data = immunizes,
-                StatusCode = HttpStatusCode.OK
-            });
+            return ResponseJsonData.Ok(new ResponseOkModel { Data = immunizes });
         }
 
         public async Task<IActionResult> ImmunizeById(int id)
         {
             var immunize = await _mediator.Send(new ImmunizeQueryById { Id = id });
 
-            return Json(new
-            {
-                Data = immunize,
-                StatusCode = HttpStatusCode.OK
-            });
+            return ResponseJsonData.Ok(new ResponseOkModel { Data = immunize });
         }
     }
 }
