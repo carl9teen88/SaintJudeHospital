@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SaintJudeHospital.Data.Entity;
 
 namespace SaintJudeHospital.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190805161347_add_middle_initial_on_patient_and_parent_entities")]
+    partial class add_middle_initial_on_patient_and_parent_entities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1181,7 +1183,7 @@ namespace SaintJudeHospital.Migrations
 
                     b.Property<string>("LastName");
 
-                    b.Property<string>("MiddleName");
+                    b.Property<string>("MiddleInitial");
 
                     b.Property<string>("Occupation");
 
@@ -1216,7 +1218,7 @@ namespace SaintJudeHospital.Migrations
 
                     b.Property<string>("LastName");
 
-                    b.Property<string>("MiddleName");
+                    b.Property<string>("MiddleInitial");
 
                     b.Property<int?>("Parent1Id");
 

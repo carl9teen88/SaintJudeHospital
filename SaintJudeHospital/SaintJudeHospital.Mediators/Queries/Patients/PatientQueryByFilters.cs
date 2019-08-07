@@ -47,7 +47,7 @@ namespace SaintJudeHospital.Mediators.Queries.Patients
                     Gender = p.Gender,
                     Id = p.Id,
                     LastName = p.LastName,
-                    MiddleInitial = p.MiddleInitial,
+                    MiddleName = p.MiddleName,
                     PersonalPhoneNumber = p.PersonalPhoneNumber
                 })
                 .ToList();

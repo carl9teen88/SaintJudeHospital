@@ -6,13 +6,13 @@ using System.Linq;
 
 namespace SaintJudeHospital.Mediators.Queries.Generics
 {
-    public class GenericQueryAll : IRequest<GenericQueryItemsResult>
+    public class GenericQueryAll : IRequest<IList<GenericQueryResult>>
     {
         public int Page { set; get; }
         public int Rpp { set; get; }
     }
 
-    public class GenericsQueryHandler : RequestHandler<GenericQueryAll, GenericQueryItemsResult>, IMediatorHandler
+    public class GenericsQueryHandler : RequestHandler<GenericQueryAll, IList<GenericQueryResult>>, IMediatorHandler
     {
         private readonly IGenericService _genericService;
 
@@ -21,21 +21,15 @@ namespace SaintJudeHospital.Mediators.Queries.Generics
             _genericService = genericService;
         }
 
-        protected override GenericQueryItemsResult Handle(GenericQueryAll request)
+        protected override IList<GenericQueryResult> Handle(GenericQueryAll request)
         {
-            var generics = _genericService.GetAll().GetData(request.Page, request.Rpp);
-
-            return new GenericQueryItemsResult
-            {
-                Generics = generics.Select(g => new GenericQueryResult
+            return _genericService.GetAll()
+                .GetData(request.Page, request.Rpp)
+                .Select(g => new GenericQueryResult
                 {
                     Id = g.Id,
                     Name = g.Name
-                }).ToList(),
-                Page = generics.Page,
-                Rows = generics.Rows,
-                TotalPage = generics.TotalPage
-            };
+                }).ToList();
         }
     }
 }

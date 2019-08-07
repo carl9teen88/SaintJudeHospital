@@ -21,52 +21,25 @@ namespace SaintJudeHospital.Controllers.Settings
         {
             var generics = await _mediator.Send(new GenericQueryAll { Page = page, Rpp = rpp });
 
-            return ResponseJsonData.Ok(new ResponseOkModel
-            {
-                Data = generics
-            });
+            return ResponseJsonData.Ok(generics);
         }
 
         public async Task<IActionResult> GenericById(int id)
         {
             var generic = await _mediator.Send(new GenericQueryById { Id = id });
 
-            if (generic != null)
-            {
-                return ResponseJsonData.Ok(new ResponseOkModel
-                {
-                    Data = generic
-                });
-            }
-            else
-            {
-                return ResponseJsonData.Error(new ResponseErrorModel
-                {
-                    Message = "Record not found.",
-                    StatusCode = StatusCodeEnum.NotFound
-                });
-            }
+            if (generic != null) return ResponseJsonData.Ok(generic);
+
+            return ResponseJsonData.Error("Record not found.");
         }
 
         public async Task<IActionResult> GenericByName(string name)
         {
             var generic = await _mediator.Send(new GenericQueryByName { Name = name });
 
-            if(generic != null)
-            {
-                return ResponseJsonData.Ok(new ResponseOkModel
-                {
-                    Data = generic
-                });
-            }
-            else
-            {
-                return ResponseJsonData.Error(new ResponseErrorModel
-                {
-                    Message = $"Generic name {name} not found.",
-                    StatusCode = StatusCodeEnum.NotFound
-                });
-            }
+            if(generic != null) return ResponseJsonData.Ok(generic);
+
+            return ResponseJsonData.Error($"Generic name {name} not found.");
         }
     }
 }

@@ -29,14 +29,14 @@ namespace SaintJudeHospital.Controllers.Settings
                 Rpp = rpp
             });
 
-            return ResponseJsonData.Ok(new ResponseOkModel { Data = immunizes });
+            return ResponseJsonData.Ok(immunizes);
         }
 
         public async Task<IActionResult> ImmunizeById(int id)
         {
             var immunize = await _mediator.Send(new ImmunizeQueryById { Id = id });
 
-            return ResponseJsonData.Ok(new ResponseOkModel { Data = immunize });
+            return ResponseJsonData.Ok(immunize);
         }
     }
 }

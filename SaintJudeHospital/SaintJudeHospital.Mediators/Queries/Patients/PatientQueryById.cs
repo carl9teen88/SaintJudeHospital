@@ -6,12 +6,12 @@ using System.Text;
 
 namespace SaintJudeHospital.Mediators.Queries.Patients
 {
-    public class PatientQueryById : IRequest<PatientQueryResult>
+    public class PatientQueryById : IRequest<PatientQueryByIdResult>
     {
         public int Id { set; get; }
     }
 
-    public class PatientQueryByIdHandler : RequestHandler<PatientQueryById, PatientQueryResult>
+    public class PatientQueryByIdHandler : RequestHandler<PatientQueryById, PatientQueryByIdResult>
     {
         private readonly IPatientService _patientService;
 
@@ -20,11 +20,11 @@ namespace SaintJudeHospital.Mediators.Queries.Patients
             _patientService = patientService;
         }
 
-        protected override PatientQueryResult Handle(PatientQueryById request)
+        protected override PatientQueryByIdResult Handle(PatientQueryById request)
         {
             var patient = _patientService.Get(request.Id);
 
-            return patient == null ? null : new PatientQueryResult
+            return patient == null ? null : new PatientQueryByIdResult
             {
                 Address = patient.Address,
                 Age = patient.Age,
@@ -33,8 +33,28 @@ namespace SaintJudeHospital.Mediators.Queries.Patients
                 Gender = patient.Gender,
                 Id = patient.Id,
                 LastName = patient.LastName,
-                MiddleInitial = patient.MiddleInitial,
-                PersonalPhoneNumber = patient.PersonalPhoneNumber
+                MiddleName = patient.MiddleName,
+                PersonalPhoneNumber = patient.PersonalPhoneNumber,
+                CivilStatus = patient.CivilStatus,
+                HomePhoneNumber = patient.HomePhoneNumber,
+                Parent1 = new ParentQueryResult
+                {
+                    Age = patient.Parent1.Age,
+                    FirstName = patient.Parent1.FirstName,
+                    Id = patient.Parent1.Id,
+                    LastName = patient.Parent1.LastName,
+                    MiddleName = patient.Parent1.MiddleName,
+                    Occupation = patient.Parent1.Occupation
+                },
+                Parent2 = new ParentQueryResult
+                {
+                    Age = patient.Parent2.Age,
+                    FirstName = patient.Parent2.FirstName,
+                    Id = patient.Parent2.Id,
+                    LastName = patient.Parent2.LastName,
+                    MiddleName = patient.Parent2.MiddleName,
+                    Occupation = patient.Parent2.Occupation
+                }
             };
         }
     }

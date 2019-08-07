@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,15 +21,15 @@ namespace SaintJudeHospital.Controllers.Settings
         public async Task<IActionResult> All()
         {
             var laboratories = await _mediator.Send(new LaboratoryQueryAll());
-            
-            return ResponseJsonData.Ok(new ResponseOkModel { Data = laboratories });
+
+            return ResponseJsonData.Ok(laboratories);
         }
 
         public async Task<IActionResult> Get(int id)
         {
             var laboratory = await _mediator.Send(new LaboratoryQueryById { Id = id });
 
-            return ResponseJsonData.Ok(new ResponseOkModel { Data = laboratory });
+            return ResponseJsonData.Ok(laboratory);
         }
     }
 }
